@@ -25,7 +25,7 @@ while decisao == 1:
             nome = input("Com o que você gastou? ")
             valor = input("Quanto custou? ")
             arquivo.write(",".join([nome, valor]))  
-            dicnatalia["USOPESSOAL"].append(valor)   
+            dicnatalia["COMIDA"].append(valor)   
             
         elif escolhacategoria == 3:
             nome = input("Com o que você gastou? ")
@@ -36,12 +36,13 @@ while decisao == 1:
         elif escolhacategoria == 4:
             nome = input("Com o que você gastou? ")
             valor = input("Quanto custou? ")
-            arquivo.write(",".join([nome, valor]))  
-            dicnatalia["COMIDA"].append(valor)   
+            arquivo.seek(0, 2)
+            arquivo.write(",".join(["USOPESSOAL", nome, valor])+"\n")  
+            dicnatalia["USOPESSOAL"].append({"nome":nome, "valor":valor})   
             arquivo.close()
         else:
             print("categoria inválida, insira novamente!")
-        arquivo.write(f"{dicnatalia['CASA']}, {dicnatalia['USOPESSOAL']}, {dicnatalia['TRANSPORTE']}, {dicnatalia['COMIDA']}\n")
+        #arquivo.write(f"{dicnatalia['CASA']}, {dicnatalia['USOPESSOAL']}, {dicnatalia['TRANSPORTE']}, {dicnatalia['COMIDA']}\n")
 
     elif pergunta == 2:
         tabelacategoria()
@@ -59,6 +60,10 @@ while decisao == 1:
         elif escolhaler == 3:
             print("Seus gastos com TRANSPORTE foram: ", dicnatalia["TRANSPORTE"])
         elif escolhaler == 4:
-            print("Seus gastos com USO PESSOAL foram: ", dicnatalia["USOPESSOAL"])
+            arquivo = open("dados.csv" , "r")
+            for i in arquivo:
+                if "USOPESSOAL" in i:
+                    print(i.strip())
+            #print("Seus gastos com USO PESSOAL foram: ", dicnatalia["USOPESSOAL"])
         
     print("retornando ao menu.....")
